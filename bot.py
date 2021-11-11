@@ -28,7 +28,7 @@ class Bot:
         self.go_to_page('page you want')
 
     def login_by_xpath(self, username, password):
-        self.driver = webdriver.Chrome("D:/Servers dj/insta_scraping/chromedriver.exe")
+        self.driver = webdriver.Chrome("D:/Servers dj/insta_scraping/driver/chromedriver.exe")
         self.driver.get('https://instagram.com/')
         sleep(5)
         username_input = self.driver.find_element_by_xpath('//*[@id="loginForm"]/div/div[1]/div/label/input')
