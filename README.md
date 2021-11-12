@@ -1,6 +1,6 @@
 # python bot
 
-## REquirments
+## Requirments
 
 - selenium
 - chromdriver
@@ -28,3 +28,9 @@ python3 -m pip install --user virtualenv
 - When login function fully excuted it goes to "go_to_page" function and it will go directly to video section of that page tou should inital "You wanted page" 
 - then in for loop you should specify how many videos do you want to download
 
+
+## Run
+For running project just type 
+```bash 
+python bot.py
+```
