@@ -1,12 +1,20 @@
 import tkinter as tk
+import time
+import datetime
+from apscheduler.schedulers.background import BackgroundScheduler
+
 from bot import Bot
 
-class scheduleStack:
-    def __init__(self, username, password, page, label, date):
+sched = BackgroundScheduler()
+sched.start()
+
+class ScheduleStack:
+    def __init__(self, username, password, page, label, post_type):
         self.password = password.get()
         self.username = username.get()
         self.page = page.get()
-        self.date = date.get()
+        self.post_type = post_type.get()
+        self.timeStamp = time.mktime(datetime.datetime.strptime(self.date, "%Y-%m-%d %H:%M").timetuple())
 
         self.label = label
 
@@ -46,17 +54,26 @@ class Gui(tk.Frame):
         pageEntry.grid(column=1, row=2, padx=10, pady=30)
 
         
-        dateLabel = tk.Label(self.master, text="date", font=("Helvatica", 18))
-        dateLabel.grid(column=0, row=3, padx=10, pady=30)
+        postTypeLabel = tk.Label(self.master, text="post/video", font=("Helvatica", 18))
+        postTypeLabel.grid(column=0, row=3, padx=10, pady=30)
 
-        dateEntry = tk.Entry(self.master, width=15, font=("Helvatica", 18))
-        dateEntry.grid(column=1, row=3, padx=10, pady=30)
+        postTypeEntry = tk.Entry(self.master, width=15, font=("Helvatica", 18))
+        postTypeEntry.grid(column=1, row=3, padx=10, pady=30)
 
-        return usernameEntry, passwordEntry, pageEntry
+        return usernameEntry, passwordEntry, pageEntry, postTypeEntry
 
 
     def run_bot(self):
-        print("Button clicked")
+        username, password, page, post_type = self.widgets
+        resultLabel = tk.Label(self.master, anchor="e", justify=tk.LEFT, text=" * Page: " + page.get() + " | Date: " + post_type.get(), font=("Helvatica", 13))
+        resultLabel.grid(column=0, row=len(self.scheduleStack) + 6, padx=10, pady=2)
+
+        Bot.login_by_xpath(username, password)
+        Bot.go_to_page(page, post_type)
+
+
+
+        # scheduleStack = ScheduleStack(username=username, password=password, page=page, label=resultLabel, date=date)
 
 
 if __name__ == '__main__':
