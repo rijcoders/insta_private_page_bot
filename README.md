@@ -9,6 +9,11 @@
 - urllib
 
 ## initial setup
+- if you have already git install using command 
+```bash
+git clone https://github.com/rezaizadijahromi/insta_private_page_bot.git
+```
+- if you don't download zip file and then go to directory
 
 create virtual env
 
