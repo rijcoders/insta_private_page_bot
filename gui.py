@@ -1,19 +1,16 @@
 import tkinter as tk
 import time
 import datetime
-from apscheduler.schedulers.background import BackgroundScheduler
 
 from bot import Bot
 
-sched = BackgroundScheduler()
-sched.start()
-
+# Scheduler will add later
 class ScheduleStack:
-    def __init__(self, username, password, page, label, post_type):
+    def __init__(self, username, password, page, label, fileTypeEntry):
         self.password = password.get()
         self.username = username.get()
         self.page = page.get()
-        self.post_type = post_type.get()
+        self.fileTypeEntry = fileTypeEntry.get()
         self.timeStamp = time.mktime(datetime.datetime.strptime(self.date, "%Y-%m-%d %H:%M").timetuple())
 
         self.label = label
@@ -28,10 +25,10 @@ class Gui(tk.Frame):
         self.scheduleStack = []
 
     def configure_gui(self):
-        self.master.geometry('1000x700')
+        self.master.geometry('700x700')
 
     def create_widgets(self):
-        scheduleRun = tk.Button(self.master, text="Schedule", font=("Hevatica", 18), padx=10, pady=5, fg="#FFF", bg="#3582e8", command=self.run_bot)
+        scheduleRun = tk.Button(self.master, text="Download", font=("Hevatica", 18), padx=10, pady=5, fg="#FFF", bg="#3582e8", command=self.run_bot)
         scheduleRun.grid(column=0, row=5, padx=10, pady=30)
 
         usernameLabel = tk.Label(self.master, text="Username", font=("Helvatica", 18))
@@ -54,22 +51,21 @@ class Gui(tk.Frame):
         pageEntry.grid(column=1, row=2, padx=10, pady=30)
 
         
-        postTypeLabel = tk.Label(self.master, text="post/video", font=("Helvatica", 18))
-        postTypeLabel.grid(column=0, row=3, padx=10, pady=30)
+        fileTypeEntry = tk.Label(self.master, text="post/video", font=("Helvatica", 18))
+        fileTypeEntry.grid(column=0, row=3, padx=10, pady=30)
 
-        postTypeEntry = tk.Entry(self.master, width=15, font=("Helvatica", 18))
-        postTypeEntry.grid(column=1, row=3, padx=10, pady=30)
+        fileTypeEntry = tk.Entry(self.master, width=15, font=("Helvatica", 18))
+        fileTypeEntry.grid(column=1, row=3, padx=10, pady=30)
 
-        return usernameEntry, passwordEntry, pageEntry, postTypeEntry
+        return usernameEntry, passwordEntry, pageEntry, fileTypeEntry
 
 
     def run_bot(self):
-        username, password, page, post_type = self.widgets
-        resultLabel = tk.Label(self.master, anchor="e", justify=tk.LEFT, text=" * Page: " + page.get() + " | Date: " + post_type.get(), font=("Helvatica", 13))
+        username, password, page, file_type = self.widgets
+        resultLabel = tk.Label(self.master, anchor="e", justify=tk.LEFT, text=" * Page: " + page.get() + " | Date: " + file_type.get() + "Download is Finished", font=("Helvatica", 13))
         resultLabel.grid(column=0, row=len(self.scheduleStack) + 6, padx=10, pady=2)
 
-        Bot.login_by_xpath(username, password)
-        Bot.go_to_page(page, post_type)
+        Bot(username=username.get(), password=password.get(), page=page.get(), file_type=file_type.get())
 
 
 

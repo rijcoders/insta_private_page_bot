@@ -18,23 +18,27 @@ class Bot:
 
     links = []
 
-    def __init__(self, file_type):
-        self.login_by_xpath('your insta username', pw)
-        # self.login('rezaizadi_ij', pw)
+    def __init__(self, file_type, username, password, page):
+        self.username = username
+        self.password = password
+        self.page = page
 
+        self.login_by_xpath(username, password)
         sleep(2)
-
         # go to page
-        self.go_to_page('page you want', file_type)
+        self.go_to_page(page, file_type)
 
     def login_by_xpath(self, username, password):
+
+        print(username, password)
+        
         self.driver = webdriver.Chrome("D:/Servers dj/insta_scraping/driver/chromedriver.exe")
         self.driver.get('https://instagram.com/')
         sleep(5)
         username_input = self.driver.find_element_by_xpath('//*[@id="loginForm"]/div/div[1]/div/label/input')
         username_input.send_keys(username)
         
-        sleep(1)
+        sleep(3)
 
         password_input = self.driver.find_element_by_xpath('//*[@id="loginForm"]/div/div[2]/div/label/input')
         password_input.send_keys(password)
