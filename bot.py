@@ -12,8 +12,6 @@ import requests
 import os
 from urllib.parse import urlparse
 
-from secret import pw
-
 class Bot:
 
     links = []
@@ -31,7 +29,7 @@ class Bot:
     def login_by_xpath(self, username, password):
 
         print(username, password)
-        
+
         self.driver = webdriver.Chrome("D:/Servers dj/insta_scraping/driver/chromedriver.exe")
         self.driver.get('https://instagram.com/')
         sleep(5)
